@@ -52,7 +52,7 @@ export default function DeliveryVolumeWidget() {
             type="button"
             role="tab"
             aria-selected={range === r.key}
-            className={`dv-pill ${range === r.key ? 'dv-pill--selected' : ''}`}
+            className={`dv-pill body-small-heavy ${range === r.key ? 'dv-pill--selected' : ''}`}
             onClick={() => handleRangeChange(r.key)}
           >
             {r.label}
@@ -69,20 +69,20 @@ export default function DeliveryVolumeWidget() {
 
         <div className="dv-card__body">
           <div className="dv-stat-row">
-            <span className="dv-stat-label">
+            <span className="dv-stat-label body-base">
               <span className="dv-dot dv-dot--total" />
               Total traded volume
             </span>
-            <span className="dv-stat-value" data-swap-key={totalDisplay}>
+            <span className="dv-stat-value body-base-heavy" data-swap-key={totalDisplay}>
               {totalDisplay}
             </span>
           </div>
           <div className="dv-stat-row">
-            <span className="dv-stat-label">
+            <span className="dv-stat-label body-base">
               <span className="dv-dot dv-dot--delivery" />
               Delivery volume
             </span>
-            <span className="dv-stat-value" data-swap-key={deliveryDisplay}>
+            <span className="dv-stat-value body-base-heavy" data-swap-key={deliveryDisplay}>
               {deliveryDisplay}
             </span>
           </div>
@@ -91,7 +91,7 @@ export default function DeliveryVolumeWidget() {
 
           <div className="dv-stat-row dv-stat-row--percent">
             <span className="dv-stat-label dv-stat-label--large body-large">Delivery percentage</span>
-            <span className="dv-stat-value dv-stat-value--large" data-swap-key={percentDisplay}>
+            <span className="dv-stat-value dv-stat-value--large body-large-heavy" data-swap-key={percentDisplay}>
               {percentDisplay}
             </span>
           </div>
@@ -132,7 +132,7 @@ export default function DeliveryVolumeWidget() {
                 return (
                   <span
                     key={bar.label}
-                    className={`dv-bar-label body-small ${isDimmed ? 'dv-bar-label--dimmed' : ''}`}
+                    className={`dv-bar-label heading-eyebrow ${isDimmed ? 'dv-bar-label--dimmed' : ''}`}
                   >
                     {bar.label}
                   </span>
