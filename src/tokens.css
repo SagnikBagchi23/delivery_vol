@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'Sohne';
+  src: url('./fonts/Sohne-Kraftig.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'GrowwSans';
+  src: url('./fonts/GrowwSans-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'GrowwSans';
+  src: url('./fonts/GrowwSans-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'groww-huge-standard';
+  src: url('./fonts/groww-huge-standard.woff2') format('woff2'),
+    url('./fonts/groww-huge-standard.otf') format('opentype');
+  font-display: swap;
+}
+
+.gh-standard-bulb::before {
+  font-family: 'groww-huge-standard';
+  content: '\ea43';
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* Dark mode neutrals (Groww Invest theme) */
+  --backgroundPrimary: #060809;
+  --backgroundSurfaceZ1: #151819;
+  --backgroundSurfaceZ2: #1e2224;
+  --backgroundSecondary: #151819;
+  --backgroundTertiary: #252a2c;
+  --backgroundDisabled: #151819;
+  --backgroundTransparent: transparent;
+
+  --borderPrimary: #252a2c;
+  --borderNeutral: #f2f5f7;
+  --borderDisabled: #1e2224;
+
+  --contentPrimary: #f2f5f7;
+  --contentSecondary: #989ea0;
+  --contentTertiary: #696e70;
+  --contentDisabled: #44494b;
+
+  /* Data-viz colors from the reference frame */
+  --dataVizTotal: #7a7ac6;
+  --dataVizDelivery: #4da4dd;
+
+  /* Emil-style easing curves */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.body-small { font-family: 'GrowwSans', sans-serif; font-weight: 400; font-size: 12px; line-height: 18px; }
+.body-small-heavy { font-family: 'GrowwSans', sans-serif; font-weight: 500; font-size: 12px; line-height: 18px; }
+.body-base { font-family: 'GrowwSans', sans-serif; font-weight: 400; font-size: 14px; line-height: 20px; }
+.body-base-heavy { font-family: 'GrowwSans', sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; }
+.body-large { font-family: 'GrowwSans', sans-serif; font-weight: 400; font-size: 16px; line-height: 24px; }
+.body-large-heavy { font-family: 'GrowwSans', sans-serif; font-weight: 500; font-size: 16px; line-height: 24px; }
+.heading-eyebrow { font-family: 'Sohne', sans-serif; font-weight: 500; font-size: 10px; line-height: 12px; letter-spacing: 0.2em; text-transform: uppercase; }
