@@ -90,7 +90,7 @@ export default function DeliveryVolumeWidget() {
           <div className="dv-divider" />
 
           <div className="dv-stat-row dv-stat-row--percent">
-            <span className="dv-stat-label dv-stat-label--large">Delivery percentage</span>
+            <span className="dv-stat-label dv-stat-label--large body-large">Delivery percentage</span>
             <span className="dv-stat-value dv-stat-value--large" data-swap-key={percentDisplay}>
               {percentDisplay}
             </span>
@@ -148,7 +148,7 @@ export default function DeliveryVolumeWidget() {
           <span className="heading-eyebrow dv-insights__label">INSIGHTS</span>
           {data.insights.map((text, i) => (
             <div className="dv-insights__item body-base" key={text}>
-              <span className="dv-insights__number">{i + 1}</span>
+              <span className="heading-eyebrow dv-insights__number">{i + 1}</span>
               <span>{text}</span>
             </div>
           ))}
