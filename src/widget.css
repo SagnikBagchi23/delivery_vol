@@ -208,7 +208,7 @@
 
 .dv-insights__label {
   color: var(--contentSecondary);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   transition: color 220ms ease;
 }
 
