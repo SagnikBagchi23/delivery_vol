@@ -53,6 +53,18 @@
 
 .dv-eyebrow {
   color: var(--contentSecondary);
+  animation: dv-value-in 180ms var(--ease-out);
+}
+
+@keyframes dv-value-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .dv-card__body {
@@ -96,7 +108,7 @@
 
 .dv-stat-value {
   color: var(--contentPrimary);
-  transition: opacity 180ms var(--ease-out);
+  animation: dv-value-in 180ms var(--ease-out);
 }
 
 .dv-divider {
@@ -139,6 +151,10 @@
   align-items: center;
   flex: 1;
   transition: transform 160ms var(--ease-out);
+}
+
+.dv-bar-group:active {
+  transform: scale(0.96);
 }
 
 
@@ -187,7 +203,19 @@
 }
 
 /* Insights */
+.dv-insights-wrap {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 240ms var(--ease-in-out);
+}
+
+.dv-insights-wrap--disabled {
+  grid-template-rows: 0fr;
+}
+
 .dv-insights {
+  min-height: 0;
+  overflow: hidden;
   border-top: 1px solid var(--borderPrimary);
   padding: 16px;
   display: flex;

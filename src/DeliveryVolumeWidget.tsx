@@ -62,7 +62,7 @@ export default function DeliveryVolumeWidget() {
 
       <div className="dv-card" onClick={handleResetSelection}>
         <div className="dv-card__header">
-          <span className="heading-eyebrow dv-eyebrow" data-swap-key={headerLabel}>
+          <span className="heading-eyebrow dv-eyebrow" key={headerLabel}>
             {headerLabel}
           </span>
         </div>
@@ -73,7 +73,7 @@ export default function DeliveryVolumeWidget() {
               <span className="dv-dot dv-dot--total" />
               Total traded volume
             </span>
-            <span className="dv-stat-value body-base-heavy" data-swap-key={totalDisplay}>
+            <span className="dv-stat-value body-base-heavy" key={totalDisplay}>
               {totalDisplay}
             </span>
           </div>
@@ -82,7 +82,7 @@ export default function DeliveryVolumeWidget() {
               <span className="dv-dot dv-dot--delivery" />
               Delivery volume
             </span>
-            <span className="dv-stat-value body-base-heavy" data-swap-key={deliveryDisplay}>
+            <span className="dv-stat-value body-base-heavy" key={deliveryDisplay}>
               {deliveryDisplay}
             </span>
           </div>
@@ -91,7 +91,7 @@ export default function DeliveryVolumeWidget() {
 
           <div className="dv-stat-row dv-stat-row--percent">
             <span className="dv-stat-label dv-stat-label--large body-large">Delivery percentage</span>
-            <span className="dv-stat-value dv-stat-value--large body-large-heavy" data-swap-key={percentDisplay}>
+            <span className="dv-stat-value dv-stat-value--large body-large-heavy" key={percentDisplay}>
               {percentDisplay}
             </span>
           </div>
@@ -132,7 +132,7 @@ export default function DeliveryVolumeWidget() {
                 return (
                   <span
                     key={bar.label}
-                    className={`dv-bar-label heading-eyebrow ${isDimmed ? 'dv-bar-label--dimmed' : ''}`}
+                    className={`dv-bar-label body-small ${isDimmed ? 'dv-bar-label--dimmed' : ''}`}
                   >
                     {bar.label}
                   </span>
@@ -142,16 +142,18 @@ export default function DeliveryVolumeWidget() {
           </div>
         </div>
 
-        <div className={`dv-insights ${!showInsight ? 'dv-insights--disabled' : ''}`}>
-          <span className="dv-insights__icon gh-standard-bulb" aria-hidden />
+        <div className={`dv-insights-wrap ${!showInsight ? 'dv-insights-wrap--disabled' : ''}`}>
+          <div className={`dv-insights ${!showInsight ? 'dv-insights--disabled' : ''}`}>
+            <span className="dv-insights__icon gh-standard-bulb" aria-hidden />
 
-          <span className="heading-eyebrow dv-insights__label">INSIGHTS</span>
-          {data.insights.map((text, i) => (
-            <div className="dv-insights__item body-base" key={text}>
-              <span className="heading-eyebrow dv-insights__number">{i + 1}</span>
-              <span>{text}</span>
-            </div>
-          ))}
+            <span className="heading-eyebrow dv-insights__label">INSIGHTS</span>
+            {data.insights.map((text, i) => (
+              <div className="dv-insights__item body-base" key={text}>
+                <span className="heading-eyebrow dv-insights__number">{i + 1}</span>
+                <span>{text}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
