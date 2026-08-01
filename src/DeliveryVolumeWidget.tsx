@@ -97,34 +97,48 @@ export default function DeliveryVolumeWidget() {
           </div>
 
           <div className="dv-chart">
-            {data.bars.map((bar, i) => {
-              const isSelected = selectedBar === i;
-              const isDimmed = selectedBar !== null && !isSelected;
-              const totalHeight = (bar.total / maxValue) * MAX_BAR_HEIGHT;
-              const deliveryHeight = (bar.delivery / maxValue) * MAX_BAR_HEIGHT;
-              return (
-                <button
-                  key={bar.label}
-                  type="button"
-                  className={`dv-bar-group ${isDimmed ? 'dv-bar-group--dimmed' : ''}`}
-                  onClick={(e) => handleBarClick(e, i)}
-                  aria-pressed={isSelected}
-                  aria-label={`${bar.label}: ${bar.percentDisplay} delivery`}
-                >
-                  <div className="dv-bar-pair" style={{ height: MAX_BAR_HEIGHT }}>
-                    <span
-                      className="dv-bar dv-bar--total"
-                      style={{ height: totalHeight }}
-                    />
-                    <span
-                      className="dv-bar dv-bar--delivery"
-                      style={{ height: deliveryHeight }}
-                    />
-                  </div>
-                  <span className="dv-bar-label body-small">{bar.label}</span>
-                </button>
-              );
-            })}
+            <div className="dv-chart-bars">
+              {data.bars.map((bar, i) => {
+                const isSelected = selectedBar === i;
+                const isDimmed = selectedBar !== null && !isSelected;
+                const totalHeight = (bar.total / maxValue) * MAX_BAR_HEIGHT;
+                const deliveryHeight = (bar.delivery / maxValue) * MAX_BAR_HEIGHT;
+                return (
+                  <button
+                    key={bar.label}
+                    type="button"
+                    className={`dv-bar-group ${isDimmed ? 'dv-bar-group--dimmed' : ''}`}
+                    onClick={(e) => handleBarClick(e, i)}
+                    aria-pressed={isSelected}
+                    aria-label={`${bar.label}: ${bar.percentDisplay} delivery`}
+                  >
+                    <div className="dv-bar-pair" style={{ height: MAX_BAR_HEIGHT }}>
+                      <span
+                        className="dv-bar dv-bar--total"
+                        style={{ height: totalHeight }}
+                      />
+                      <span
+                        className="dv-bar dv-bar--delivery"
+                        style={{ height: deliveryHeight }}
+                      />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="dv-chart-labels">
+              {data.bars.map((bar, i) => {
+                const isDimmed = selectedBar !== null && selectedBar !== i;
+                return (
+                  <span
+                    key={bar.label}
+                    className={`dv-bar-label body-small ${isDimmed ? 'dv-bar-label--dimmed' : ''}`}
+                  >
+                    {bar.label}
+                  </span>
+                );
+              })}
+            </div>
           </div>
 
           <span className="dv-footer body-small">{data.footer}</span>

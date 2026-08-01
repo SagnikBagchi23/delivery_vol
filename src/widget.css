@@ -126,12 +126,23 @@
 /* Chart */
 .dv-chart {
   display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+
+.dv-chart-bars {
+  display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 8px;
-  padding-top: 12px;
   border-bottom: 1px solid var(--borderPrimary);
-  padding-bottom: 8px;
+}
+
+.dv-chart-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
 }
 
 .dv-bar-group {
@@ -143,7 +154,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
   flex: 1;
   transition: transform 160ms var(--ease-out);
 }
@@ -181,8 +191,15 @@
 }
 
 .dv-bar-label {
+  flex: 1;
+  text-align: center;
   color: var(--contentSecondary);
   white-space: nowrap;
+  transition: opacity 220ms var(--ease-out);
+}
+
+.dv-bar-label--dimmed {
+  opacity: 0.3;
 }
 
 .dv-footer {
