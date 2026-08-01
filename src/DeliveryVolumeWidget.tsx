@@ -41,7 +41,7 @@ export default function DeliveryVolumeWidget() {
   const totalDisplay = selected ? selected.totalDisplay : data.totalDisplay;
   const deliveryDisplay = selected ? selected.deliveryDisplay : data.deliveryDisplay;
   const percentDisplay = selected ? selected.percentDisplay : data.percentDisplay;
-  const showInsight = !selected && data.insight;
+  const showInsight = !selected && data.insights.length > 0;
 
   return (
     <div className="dv-page">
@@ -140,25 +140,18 @@ export default function DeliveryVolumeWidget() {
               })}
             </div>
           </div>
-
-          <span className="dv-footer body-small">{data.footer}</span>
         </div>
 
         <div className={`dv-insights ${!showInsight ? 'dv-insights--disabled' : ''}`}>
           <span className="dv-insights__icon gh-standard-bulb" aria-hidden />
 
           <span className="heading-eyebrow dv-insights__label">INSIGHTS</span>
-          {showInsight ? (
-            <div className="dv-insights__item body-base">
-              <span className="dv-insights__number">1</span>
-              <span>{data.insight}</span>
+          {data.insights.map((text, i) => (
+            <div className="dv-insights__item body-base" key={text}>
+              <span className="dv-insights__number">{i + 1}</span>
+              <span>{text}</span>
             </div>
-          ) : (
-            <div className="dv-insights__item body-base dv-insights__item--empty">
-              <span className="dv-insights__number">—</span>
-              <span>No insight for this period</span>
-            </div>
-          )}
+          ))}
         </div>
       </div>
     </div>
