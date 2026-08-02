@@ -105,7 +105,7 @@ export default function DeliveryVolumeWidget() {
                 const deliveryHeight = (bar.delivery / maxValue) * MAX_BAR_HEIGHT;
                 return (
                   <button
-                    key={bar.label}
+                    key={i}
                     type="button"
                     className={`dv-bar-group ${isDimmed ? 'dv-bar-group--dimmed' : ''}`}
                     onClick={(e) => handleBarClick(e, i)}
@@ -131,7 +131,7 @@ export default function DeliveryVolumeWidget() {
                 const isDimmed = selectedBar !== null && selectedBar !== i;
                 return (
                   <span
-                    key={bar.label}
+                    key={i}
                     className={`dv-bar-label body-small ${isDimmed ? 'dv-bar-label--dimmed' : ''}`}
                   >
                     {bar.label}
