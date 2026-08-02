@@ -1,4 +1,4 @@
-import { useMemo, useState, type MouseEvent } from 'react';
+import { useEffect, useMemo, useState, type MouseEvent } from 'react';
 import { RANGE_DATA, type RangeKey } from './data';
 import './widget.css';
 
@@ -13,8 +13,16 @@ const MAX_BAR_HEIGHT = 120;
 export default function DeliveryVolumeWidget() {
   const [range, setRange] = useState<RangeKey>('weekly');
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
+  const [lastInsights, setLastInsights] = useState<string[]>([]);
 
   const data = RANGE_DATA[range];
+
+  useEffect(() => {
+    if (data.insights.length > 0) setLastInsights(data.insights);
+  }, [data.insights]);
+
+  const hasInsights = data.insights.length > 0;
+  const insightsToShow = hasInsights ? data.insights : lastInsights;
 
   const maxValue = useMemo(
     () => Math.max(...data.bars.map((b) => b.total)),
@@ -41,7 +49,7 @@ export default function DeliveryVolumeWidget() {
   const totalDisplay = selected ? selected.totalDisplay : data.totalDisplay;
   const deliveryDisplay = selected ? selected.deliveryDisplay : data.deliveryDisplay;
   const percentDisplay = selected ? selected.percentDisplay : data.percentDisplay;
-  const showInsight = !selected && data.insights.length > 0;
+  const dimInsight = selected || !hasInsights;
 
   return (
     <div className="dv-page">
@@ -142,13 +150,13 @@ export default function DeliveryVolumeWidget() {
           </div>
         </div>
 
-        {data.insights.length > 0 && (
-          <div className={`dv-insights-wrap ${!showInsight ? 'dv-insights-wrap--disabled' : ''}`}>
-            <div className={`dv-insights ${!showInsight ? 'dv-insights--disabled' : ''}`}>
+        {insightsToShow.length > 0 && (
+          <div className="dv-insights-wrap">
+            <div className={`dv-insights ${dimInsight ? 'dv-insights--disabled' : ''}`}>
               <span className="dv-insights__icon gh-standard-bulb" aria-hidden />
 
               <span className="heading-eyebrow dv-insights__label">INSIGHTS</span>
-              {data.insights.map((text, i) => (
+              {insightsToShow.map((text, i) => (
                 <div className="dv-insights__item body-base" key={text}>
                   <span className="heading-eyebrow dv-insights__number">{i + 1}</span>
                   <span>{text}</span>
