@@ -142,19 +142,21 @@ export default function DeliveryVolumeWidget() {
           </div>
         </div>
 
-        <div className={`dv-insights-wrap ${!showInsight ? 'dv-insights-wrap--disabled' : ''}`}>
-          <div className={`dv-insights ${!showInsight ? 'dv-insights--disabled' : ''}`}>
-            <span className="dv-insights__icon gh-standard-bulb" aria-hidden />
+        {data.insights.length > 0 && (
+          <div className={`dv-insights-wrap ${!showInsight ? 'dv-insights-wrap--disabled' : ''}`}>
+            <div className={`dv-insights ${!showInsight ? 'dv-insights--disabled' : ''}`}>
+              <span className="dv-insights__icon gh-standard-bulb" aria-hidden />
 
-            <span className="heading-eyebrow dv-insights__label">INSIGHTS</span>
-            {data.insights.map((text, i) => (
-              <div className="dv-insights__item body-base" key={text}>
-                <span className="heading-eyebrow dv-insights__number">{i + 1}</span>
-                <span>{text}</span>
-              </div>
-            ))}
+              <span className="heading-eyebrow dv-insights__label">INSIGHTS</span>
+              {data.insights.map((text, i) => (
+                <div className="dv-insights__item body-base" key={text}>
+                  <span className="heading-eyebrow dv-insights__number">{i + 1}</span>
+                  <span>{text}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
