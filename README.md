@@ -1,32 +1,38 @@
-# React + TypeScript + Vite
+# Delivery Volume Widget
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A React + TypeScript widget that displays a stock's traded volume vs. delivery volume across daily, weekly, and monthly ranges, with a bar chart and range-aware insights.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Toggle between Daily / Weekly / Monthly ranges via a pill selector
+- Bar chart comparing total traded volume against delivery volume per period
+- Click a bar to drill into that period's stats; other bars dim
+- Insights panel that dims (instead of disappearing) when a bar is selected or the current range has no insights, falling back to the last available insights
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 + TypeScript
+- Vite 8
+- Oxlint for linting
 
-## Expanding the Oxlint configuration
+## Getting Started
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Other scripts:
+
+```bash
+npm run build    # type-check and build for production
+npm run lint      # run oxlint
+npm run preview   # preview the production build
+```
+
+## Project Structure
+
+- `src/DeliveryVolumeWidget.tsx` — main widget component
+- `src/data.ts` — sample range data (daily/weekly/monthly bars and insights)
+- `src/widget.css`, `src/tokens.css` — widget styling and design tokens
+- `src/prototypes/` — isolated design exploration surface, not wired into the app
