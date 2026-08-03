@@ -10,6 +10,12 @@ const RANGES: { key: RangeKey; label: string }[] = [
 
 const MAX_BAR_HEIGHT = 120;
 
+// "LAST 5 WEEKS" -> { prefix: "LAST 5 ", word: "WEEKS" }
+function splitEyebrow(eyebrow: string) {
+  const idx = eyebrow.lastIndexOf(' ');
+  return { prefix: eyebrow.slice(0, idx + 1), word: eyebrow.slice(idx + 1) };
+}
+
 export default function DeliveryVolumeWidget() {
   const [range, setRange] = useState<RangeKey>('weekly');
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
@@ -70,9 +76,23 @@ export default function DeliveryVolumeWidget() {
 
       <div className="dv-card" onClick={handleResetSelection}>
         <div className="dv-card__header">
-          <span className="heading-eyebrow dv-eyebrow" key={headerLabel}>
-            {headerLabel}
-          </span>
+          {selected ? (
+            <span className="heading-eyebrow dv-eyebrow" key={headerLabel}>
+              {headerLabel}
+            </span>
+          ) : (
+            (() => {
+              const { prefix, word } = splitEyebrow(headerLabel);
+              return (
+                <span className="heading-eyebrow dv-eyebrow">
+                  {prefix}
+                  <span className="dv-eyebrow__word" key={word}>
+                    {word}
+                  </span>
+                </span>
+              );
+            })()
+          )}
         </div>
 
         <div className="dv-card__body">

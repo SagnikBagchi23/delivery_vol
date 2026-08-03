@@ -55,6 +55,11 @@
   animation: dv-value-in 180ms var(--ease-out);
 }
 
+.dv-eyebrow__word {
+  display: inline-block;
+  animation: dv-word-in 200ms var(--ease-out) both;
+}
+
 @keyframes dv-value-in {
   from {
     opacity: 0;
@@ -63,6 +68,23 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes dv-word-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dv-eyebrow__word {
+    animation: none;
   }
 }
 
