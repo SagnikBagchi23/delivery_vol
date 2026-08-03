@@ -104,7 +104,7 @@ export default function DeliveryVolumeWidget() {
             </span>
           </div>
 
-          <div className="dv-chart">
+          <div className="dv-chart dv-chart--fluid">
             <div className="dv-chart-bars">
               {data.bars.map((bar, i) => {
                 const isSelected = selectedBar === i;
@@ -115,7 +115,7 @@ export default function DeliveryVolumeWidget() {
                   <button
                     key={i}
                     type="button"
-                    className={`dv-bar-group ${isDimmed ? 'dv-bar-group--dimmed' : ''}`}
+                    className={`dv-bar-group ${isDimmed ? 'dv-bar-group--dimmed' : ''} ${isSelected ? 'dv-bar-group--selected' : ''}`}
                     onClick={(e) => handleBarClick(e, i)}
                     aria-pressed={isSelected}
                     aria-label={`${bar.label}: ${bar.percentDisplay} delivery`}
