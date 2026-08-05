@@ -47,7 +47,7 @@ function useValueDirection(display: string) {
 }
 
 export default function DeliveryVolumeWidget() {
-  const [range, setRange] = useState<RangeKey>('weekly');
+  const [range, setRange] = useState<RangeKey>('daily');
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
   const [lastInsights, setLastInsights] = useState<string[]>([]);
 
