@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type MouseEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { RANGE_DATA, type RangeKey } from './data';
 import './widget.css';
 
@@ -14,6 +14,25 @@ const MAX_BAR_HEIGHT = 120;
 function splitEyebrow(eyebrow: string) {
   const idx = eyebrow.lastIndexOf(' ');
   return { prefix: eyebrow.slice(0, idx + 1), word: eyebrow.slice(idx + 1) };
+}
+
+function parseDisplayNumber(display: string) {
+  return parseFloat(display.replace(/[^0-9.-]/g, ''));
+}
+
+// Tracks whether a formatted numeric string went up, down, or stayed flat
+// versus its previous value, so the UI can animate the change directionally.
+function useValueDirection(display: string) {
+  const prevRef = useRef<number | null>(null);
+  const numeric = parseDisplayNumber(display);
+  const prevNumeric = prevRef.current;
+
+  useEffect(() => {
+    prevRef.current = numeric;
+  });
+
+  if (prevNumeric === null || numeric === prevNumeric) return 'flat';
+  return numeric > prevNumeric ? 'up' : 'down';
 }
 
 export default function DeliveryVolumeWidget() {
@@ -56,6 +75,10 @@ export default function DeliveryVolumeWidget() {
   const deliveryDisplay = selected ? selected.deliveryDisplay : data.deliveryDisplay;
   const percentDisplay = selected ? selected.percentDisplay : data.percentDisplay;
   const dimInsight = selected || !hasInsights;
+
+  const totalDirection = useValueDirection(totalDisplay);
+  const deliveryDirection = useValueDirection(deliveryDisplay);
+  const percentDirection = useValueDirection(percentDisplay);
 
   return (
     <div className="dv-page">
@@ -101,7 +124,10 @@ export default function DeliveryVolumeWidget() {
               <span className="dv-dot dv-dot--total" />
               Total traded volume
             </span>
-            <span className="dv-stat-value body-base-heavy" key={totalDisplay}>
+            <span
+              className={`dv-stat-value body-base-heavy dv-stat-value--${totalDirection}`}
+              key={totalDisplay}
+            >
               {totalDisplay}
             </span>
           </div>
@@ -110,7 +136,10 @@ export default function DeliveryVolumeWidget() {
               <span className="dv-dot dv-dot--delivery" />
               Delivery volume
             </span>
-            <span className="dv-stat-value body-base-heavy" key={deliveryDisplay}>
+            <span
+              className={`dv-stat-value body-base-heavy dv-stat-value--${deliveryDirection}`}
+              key={deliveryDisplay}
+            >
               {deliveryDisplay}
             </span>
           </div>
@@ -119,7 +148,10 @@ export default function DeliveryVolumeWidget() {
 
           <div className="dv-stat-row dv-stat-row--percent">
             <span className="dv-stat-label dv-stat-label--large body-large">Delivery percentage</span>
-            <span className="dv-stat-value dv-stat-value--large body-large-heavy" key={percentDisplay}>
+            <span
+              className={`dv-stat-value dv-stat-value--large body-large-heavy dv-stat-value--${percentDirection}`}
+              key={percentDisplay}
+            >
               {percentDisplay}
             </span>
           </div>
