@@ -5,7 +5,7 @@
   flex-direction: column;
   gap: 16px;
   border: 1px solid var(--borderPrimary);
-  padding: 16px;
+  padding: 24px;
   box-sizing: border-box;
 }
 
