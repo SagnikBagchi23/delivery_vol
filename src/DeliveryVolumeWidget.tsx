@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { RANGE_DATA, type RangeKey } from './data';
+import { RollingValue } from './RollingValue';
 import './widget.css';
 
 const RANGES: { key: RangeKey; label: string }[] = [
@@ -125,36 +126,33 @@ export default function DeliveryVolumeWidget() {
               <span className="dv-dot dv-dot--total" />
               Total traded volume
             </span>
-            <span
-              className={`dv-stat-value body-base-heavy dv-stat-value--${totalDirection}`}
-              key={totalDisplay}
-            >
-              {totalDisplay}
-            </span>
+            <RollingValue
+              className="dv-stat-value body-base-heavy"
+              value={totalDisplay}
+              direction={totalDirection}
+            />
           </div>
           <div className="dv-stat-row">
             <span className="dv-stat-label body-base">
               <span className="dv-dot dv-dot--delivery" />
               Delivery volume
             </span>
-            <span
-              className={`dv-stat-value body-base-heavy dv-stat-value--${deliveryDirection}`}
-              key={deliveryDisplay}
-            >
-              {deliveryDisplay}
-            </span>
+            <RollingValue
+              className="dv-stat-value body-base-heavy"
+              value={deliveryDisplay}
+              direction={deliveryDirection}
+            />
           </div>
 
           <div className="dv-divider" />
 
           <div className="dv-stat-row dv-stat-row--percent">
             <span className="dv-stat-label dv-stat-label--large body-large">Delivery percentage</span>
-            <span
-              className={`dv-stat-value dv-stat-value--large body-large-heavy dv-stat-value--${percentDirection}`}
-              key={percentDisplay}
-            >
-              {percentDisplay}
-            </span>
+            <RollingValue
+              className="dv-stat-value dv-stat-value--large body-large-heavy"
+              value={percentDisplay}
+              direction={percentDirection}
+            />
           </div>
 
           <div className="dv-chart dv-chart--fluid">
