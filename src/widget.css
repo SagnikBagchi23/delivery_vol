@@ -1,8 +1,13 @@
 .dv-page {
   width: 375px;
+  min-height: 812px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  border: 1px solid var(--borderPrimary);
+  border-radius: 40px;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 /* Pill group */
