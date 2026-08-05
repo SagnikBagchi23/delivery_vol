@@ -9,6 +9,11 @@
   box-sizing: border-box;
 }
 
+.dv-page-title {
+  margin: 0;
+  color: var(--contentPrimary);
+}
+
 /* Pill group */
 .dv-pill-group {
   display: flex;

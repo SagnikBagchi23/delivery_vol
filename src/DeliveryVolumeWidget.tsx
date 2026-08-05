@@ -82,6 +82,7 @@ export default function DeliveryVolumeWidget() {
 
   return (
     <div className="dv-page">
+      <h2 className="heading-base dv-page-title">Delivery volume percentage</h2>
       <div className="dv-pill-group" role="tablist" aria-label="Time range">
         {RANGES.map((r) => (
           <button
