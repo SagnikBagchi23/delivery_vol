@@ -1,0 +1,237 @@
+.proto-harness {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  width: 100%;
+  gap: 16px;
+}
+
+.proto-device {
+  position: relative;
+  width: 375px;
+  height: 812px;
+  border: 1px solid #121212;
+  border-radius: 40px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 64px 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.proto-device__statusbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  box-sizing: border-box;
+  color: #121212;
+  pointer-events: none;
+}
+
+.proto-device__time {
+  font-family: 'GrowwSans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.proto-device__icons {
+  display: flex;
+  align-items: center;
+}
+
+.proto-device__home {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  border-radius: 99px;
+  background: #121212;
+  pointer-events: none;
+}
+
+.dv-card--numbers-only {
+  width: 100%;
+}
+
+.dv-card--numbers-only .dv-card__body {
+  padding-top: 20px;
+}
+
+.proto-num-next {
+  appearance: none;
+  border: 1px solid var(--borderPrimary);
+  background: transparent;
+  color: var(--contentSecondary);
+  border-radius: 99px;
+  height: 32px;
+  padding: 0 16px;
+  font: inherit;
+  font-family: 'GrowwSans', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), color 200ms ease, border-color 200ms ease;
+}
+
+.proto-num-next:hover {
+  color: var(--contentPrimary);
+  border-color: var(--borderNeutral);
+}
+
+.proto-num-next:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   Variant A — Slide (whole-value directional slide)
+   The entire formatted string moves as one unit: up-and-in when
+   the value increased, down-and-in when it decreased. Mirrors a
+   stock ticker digit — same idea already used elsewhere in the
+   card, kept here as the baseline against the other two axes.
+   ============================================================ */
+.proto-slide-value {
+  display: inline-block;
+}
+
+.proto-slide-value--up {
+  animation: proto-slide-in-up 200ms var(--ease-out);
+}
+
+.proto-slide-value--down {
+  animation: proto-slide-in-down 200ms var(--ease-out);
+}
+
+@keyframes proto-slide-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes proto-slide-in-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Variant B — Odometer (per-digit staggered roll)
+   Each digit rolls in independently, staggered from the units
+   place outward, like a mechanical odometer. Punctuation
+   (comma/period/%) just fades — rolling a comma looks broken.
+   ============================================================ */
+.proto-odo-value {
+  display: inline-flex;
+  font-variant-numeric: tabular-nums;
+}
+
+.proto-odo-col {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2em;
+}
+
+.proto-odo-digit {
+  display: inline-block;
+}
+
+.proto-odo-digit--up {
+  animation: proto-odo-in-up 260ms var(--ease-out) both;
+  animation-delay: var(--proto-odo-delay, 0ms);
+}
+
+.proto-odo-digit--down {
+  animation: proto-odo-in-down 260ms var(--ease-out) both;
+  animation-delay: var(--proto-odo-delay, 0ms);
+}
+
+.proto-odo-digit--fade {
+  animation: proto-odo-fade 200ms ease both;
+  animation-delay: var(--proto-odo-delay, 0ms);
+}
+
+@keyframes proto-odo-in-up {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes proto-odo-in-down {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes proto-odo-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ============================================================
+   Variant C — Flash Crossfade (no movement, calm dashboard axis)
+   The number itself only blurs/crossfades in place (Emil's blur
+   trick for masking a crossfade); direction is communicated by a
+   brief colored highlight behind it that decays over ~600ms, not
+   by any positional motion. Best fit for dense, sober data UI.
+   ============================================================ */
+.proto-flash-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.proto-flash-glow {
+  position: absolute;
+  inset: -4px -8px;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.proto-flash-glow--up {
+  background: var(--dataVizDelivery);
+  animation: proto-flash-decay 600ms ease-out both;
+}
+
+.proto-flash-glow--down {
+  background: #d9534f;
+  animation: proto-flash-decay 600ms ease-out both;
+}
+
+@keyframes proto-flash-decay {
+  from { opacity: 0.22; }
+  to { opacity: 0; }
+}
+
+.proto-flash-value {
+  display: inline-block;
+  animation: proto-flash-crossfade 220ms ease both;
+}
+
+@keyframes proto-flash-crossfade {
+  from { opacity: 0; filter: blur(2px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proto-slide-value--up,
+  .proto-slide-value--down,
+  .proto-odo-digit--up,
+  .proto-odo-digit--down,
+  .proto-odo-digit--fade,
+  .proto-flash-value {
+    animation: none;
+  }
+  .proto-flash-glow--up,
+  .proto-flash-glow--down {
+    animation: none;
+    opacity: 0;
+  }
+}
