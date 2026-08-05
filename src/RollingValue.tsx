@@ -29,6 +29,58 @@ function buildDigitRun(oldChar: string | undefined, newChar: string, direction: 
   return run;
 }
 
+// Renders one run of digits and drives it from 0 to its target offset. Keyed
+// fresh per run by the caller so a new digit change always starts from a
+// clean, just-mounted "0" position instead of inheriting whatever transform
+// state a previous run left behind — that stale state is what let some
+// columns snap straight to the final digit instead of rolling.
+function RollStrip({
+  run,
+  steps,
+  duration,
+  delay,
+}: {
+  run: number[];
+  steps: number;
+  duration: number;
+  delay: number;
+}) {
+  const [settled, setSettled] = useState(false);
+
+  useEffect(() => {
+    // Double rAF: the first guarantees the initial (unsettled) transform has
+    // actually painted before we change it, so the browser has something to
+    // transition from instead of collapsing both states into one frame.
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setSettled(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, []);
+
+  return (
+    <span
+      className="dv-roll-strip"
+      style={
+        {
+          transform: `translateY(${settled ? -steps * 1.2 : 0}em)`,
+          transitionDuration: `${duration}ms`,
+          transitionDelay: `${delay}ms`,
+        } as CSSProperties
+      }
+    >
+      {run.map((digit, i) => (
+        <span className="dv-roll-digit" key={i}>
+          {digit}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function RollColumn({
   oldChar,
   newChar,
@@ -41,14 +93,18 @@ function RollColumn({
   delay: number;
 }) {
   const run = useMemo(() => buildDigitRun(oldChar, newChar, direction), [oldChar, newChar, direction]);
-  const [settled, setSettled] = useState(false);
 
-  useEffect(() => {
-    if (!run) return;
-    setSettled(false);
-    const raf = requestAnimationFrame(() => setSettled(true));
-    return () => cancelAnimationFrame(raf);
-  }, [run]);
+  // A fresh generation number per actual digit change, so RollStrip always
+  // remounts (rather than reusing an already-settled instance and having to
+  // reset its transform mid-flight, which reads as a snap/reverse instead of
+  // a roll). Content-equal runs (e.g. two separate "8 -> 9" changes in a row)
+  // must still remount, so this can't just key off the run's own values.
+  const genRef = useRef(0);
+  const lastTargetRef = useRef<string | null>(null);
+  if (run && lastTargetRef.current !== newChar) {
+    genRef.current += 1;
+  }
+  lastTargetRef.current = newChar;
 
   if (!run) {
     return <span className="dv-roll-col dv-roll-col--static">{newChar}</span>;
@@ -59,22 +115,7 @@ function RollColumn({
 
   return (
     <span className="dv-roll-col">
-      <span
-        className="dv-roll-strip"
-        style={
-          {
-            transform: `translateY(${settled ? -steps * 1.2 : 0}em)`,
-            transitionDuration: `${duration}ms`,
-            transitionDelay: `${delay}ms`,
-          } as CSSProperties
-        }
-      >
-        {run.map((digit, i) => (
-          <span className="dv-roll-digit" key={i}>
-            {digit}
-          </span>
-        ))}
-      </span>
+      <RollStrip key={genRef.current} run={run} steps={steps} duration={duration} delay={delay} />
     </span>
   );
 }
