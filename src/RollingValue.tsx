@@ -98,11 +98,30 @@ export function RollingValue({
   const chars = value.split('');
   const prevChars = prevValue ? prevValue.split('') : [];
 
+  // Pair digits by place value (counting only digits, right to left) rather
+  // than raw character index, so a comma shifting position when the number
+  // gains/loses a group (e.g. "8,608" -> "18,522") doesn't break the
+  // alignment and leave every digit rolling against a comma.
+  const prevDigitsFromRight: string[] = [];
+  for (let i = prevChars.length - 1; i >= 0; i -= 1) {
+    if (/[0-9]/.test(prevChars[i])) prevDigitsFromRight.push(prevChars[i]);
+  }
+
+  let digitIndex = -1;
+  const digitFromRightForIndex: (number | null)[] = new Array(chars.length).fill(null);
+  for (let i = chars.length - 1; i >= 0; i -= 1) {
+    if (/[0-9]/.test(chars[i])) {
+      digitIndex += 1;
+      digitFromRightForIndex[i] = digitIndex;
+    }
+  }
+
   return (
     <span className={`${className} dv-roll-value`}>
       {chars.map((ch, i) => {
         const fromRight = chars.length - 1 - i;
-        const prevCh = prevChars[prevChars.length - 1 - fromRight];
+        const digitPos = digitFromRightForIndex[i];
+        const prevCh = digitPos === null ? undefined : prevDigitsFromRight[digitPos];
         return (
           <RollColumn
             key={i}
