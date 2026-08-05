@@ -23,14 +23,24 @@ function parseDisplayNumber(display: string) {
 
 // Tracks whether a formatted numeric string went up, down, or stayed flat
 // versus its previous value, so the UI can animate the change directionally.
+//
+// Updates the "previous" ref during render rather than in an effect. A
+// sibling effect elsewhere in the tree (the insights fallback) can trigger a
+// second render right after commit but before paint; if the previous value
+// were captured in an effect, that second render would see it already
+// advanced to the new value, read the change as "flat", and suppress the
+// roll animation before it's ever visible. Mutating the ref during render is
+// safe because it's idempotent — it only advances when `numeric` changes, so
+// extra re-renders with the same value are no-ops.
 function useValueDirection(display: string) {
-  const prevRef = useRef<number | null>(null);
   const numeric = parseDisplayNumber(display);
+  const lastSeenRef = useRef<number | null>(null);
+  const prevRef = useRef<number | null>(null);
+  if (lastSeenRef.current !== numeric) {
+    prevRef.current = lastSeenRef.current;
+    lastSeenRef.current = numeric;
+  }
   const prevNumeric = prevRef.current;
-
-  useEffect(() => {
-    prevRef.current = numeric;
-  });
 
   if (prevNumeric === null || numeric === prevNumeric) return 'flat';
   return numeric > prevNumeric ? 'up' : 'down';

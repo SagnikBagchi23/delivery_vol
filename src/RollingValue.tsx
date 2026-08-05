@@ -129,12 +129,21 @@ export function RollingValue({
   direction: Direction;
   className: string;
 }) {
+  // Capture the previous value during render (not in an effect). Doing it in
+  // an effect races with sibling effects elsewhere in the tree (e.g. the
+  // insights fallback effect) that trigger another render right after commit
+  // but before paint — by then the effect would've already advanced
+  // prevValueRef to the *new* value, making oldChar === newChar and killing
+  // the roll before it's ever visible. Mutating the ref during render is
+  // safe here because it's idempotent: it only updates when `value` actually
+  // changes, so extra re-renders with the same value are no-ops.
+  const lastSeenValueRef = useRef<string | null>(null);
   const prevValueRef = useRef<string | null>(null);
+  if (lastSeenValueRef.current !== value) {
+    prevValueRef.current = lastSeenValueRef.current;
+    lastSeenValueRef.current = value;
+  }
   const prevValue = prevValueRef.current;
-
-  useEffect(() => {
-    prevValueRef.current = value;
-  });
 
   const chars = value.split('');
   const prevChars = prevValue ? prevValue.split('') : [];

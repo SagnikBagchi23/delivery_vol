@@ -258,6 +258,7 @@
 
 .dv-chart--fluid .dv-bar-group--selected .dv-bar {
   transform: scaleX(1.12);
+  box-shadow: none;
 }
 
 .dv-chart--fluid .dv-bar-pair {
