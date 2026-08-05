@@ -260,15 +260,15 @@
   box-shadow: none;
 }
 
-/* Scale each bar toward its own outer edge (not its center, which is the
-   default) so growing wider expands away from the pair's gap instead of
-   eating into it. */
+/* Anchor each bar's scale at the edge facing its neighbor (not the center,
+   which is the default) so growing wider pushes away from the pair's gap
+   instead of eating into it. */
 .dv-chart--fluid .dv-bar-group--selected .dv-bar--total {
-  transform-origin: left;
+  transform-origin: right;
 }
 
 .dv-chart--fluid .dv-bar-group--selected .dv-bar--delivery {
-  transform-origin: right;
+  transform-origin: left;
 }
 
 .dv-chart--fluid .dv-bar-pair {
