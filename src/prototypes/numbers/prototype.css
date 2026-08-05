@@ -220,6 +220,44 @@
   to { opacity: 1; filter: blur(0); }
 }
 
+/* ============================================================
+   Variant D — Rolling Counter (mechanical wheel, passes through
+   every intermediate digit on the way to the new value)
+   Each digit is a vertical strip of the digits it passes through,
+   translated into place with a strong ease-out settle. Staggered
+   from the units place outward. Non-digit characters (comma, %,
+   period) never roll — they're rendered statically.
+   ============================================================ */
+.proto-roll-value {
+  display: inline-flex;
+  font-variant-numeric: tabular-nums;
+}
+
+.proto-roll-col {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2em;
+}
+
+.proto-roll-col--static {
+  overflow: visible;
+}
+
+.proto-roll-strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 260ms var(--ease-out);
+  will-change: transform;
+}
+
+.proto-roll-digit {
+  height: 1.2em;
+  line-height: 1.2em;
+  text-align: center;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .proto-slide-value--up,
   .proto-slide-value--down,
@@ -233,5 +271,8 @@
   .proto-flash-glow--down {
     animation: none;
     opacity: 0;
+  }
+  .proto-roll-strip {
+    transition: none;
   }
 }

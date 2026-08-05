@@ -2,12 +2,14 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Slide from './variants/Slide';
 import Odometer from './variants/Odometer';
 import Flash from './variants/Flash';
+import Roll from './variants/Roll';
 import './prototype.css';
 
 const VARIANTS = [
   { name: 'Slide', Component: Slide },
   { name: 'Odometer', Component: Odometer },
   { name: 'Flash', Component: Flash },
+  { name: 'Roll', Component: Roll },
 ];
 
 function readInitial() {

@@ -36,7 +36,7 @@ npm run preview   # preview the production build
 - `src/data.ts` — sample range data (daily/weekly/monthly bars and insights)
 - `src/widget.css`, `src/tokens.css` — widget styling and design tokens
 - `src/prototypes/` — isolated design exploration surface, not wired into the app
-  - `src/prototypes/numbers/` — number animation variants (Flash, Odometer, Slide), served via `numbers.html`
+  - `src/prototypes/numbers/` — number animation variants (Flash, Odometer, Slide, Roll), served via `numbers.html`
   - `src/prototypes/bar-morph/` — bar morph animation variants (Curtain, Fluid, Snap), served via `prototype.html`
 
 ## Prototype Entry Points
