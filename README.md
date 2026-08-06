@@ -33,7 +33,7 @@ npm run preview   # preview the production build
 ## Project Structure
 
 - `src/DeliveryVolumeWidget.tsx` — main widget component
-- `src/data.ts` — sample range data (daily/weekly/monthly bars and insights)
+- `src/data.ts` — sample range data (daily/weekly/monthly bars and insights, dated 2026)
 - `src/widget.css`, `src/tokens.css` — widget styling and design tokens
 - `src/prototypes/` — isolated design exploration surface, not wired into the app
   - `src/prototypes/numbers/` — number animation variants (Flash, Odometer, Slide, Roll), served via `numbers.html`
